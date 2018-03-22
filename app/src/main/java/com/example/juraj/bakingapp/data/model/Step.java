@@ -4,10 +4,15 @@ package com.example.juraj.bakingapp.data.model;
  * Created by juraj on 3/19/18.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+import java.io.Serializable;
+
+public class Step implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -64,4 +69,15 @@ public class Step {
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
+
+    /*
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(shortDescription);
+        parcel.writeString(description);
+        parcel.writeString(videoURL);
+        parcel.writeString(thumbnailURL);
+    }
+    */
 }

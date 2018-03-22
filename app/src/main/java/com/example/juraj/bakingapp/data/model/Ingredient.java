@@ -3,11 +3,13 @@ package com.example.juraj.bakingapp.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable{
 
     @SerializedName("quantity")
     @Expose
-    private Integer quantity;
+    private Double quantity;
     @SerializedName("measure")
     @Expose
     private String measure;
@@ -15,11 +17,11 @@ public class Ingredient {
     @Expose
     private String ingredient;
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
