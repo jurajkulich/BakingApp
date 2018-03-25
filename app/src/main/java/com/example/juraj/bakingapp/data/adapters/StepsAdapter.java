@@ -1,6 +1,9 @@
 package com.example.juraj.bakingapp.data.adapters;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.juraj.bakingapp.R;
+import com.example.juraj.bakingapp.StepVideoFragment;
 import com.example.juraj.bakingapp.data.model.Step;
 
 import java.util.List;
@@ -47,10 +51,19 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Step step = mStepList.get(position);
+        final Step step = mStepList.get(position);
 
         TextView textView = holder.mStepNameTextView;
         textView.setText(step.getShortDescription());
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StepVideoFragment stepVideoFragment = StepVideoFragment.newInstance(step);
+                android.support.v4.app.FragmentTransaction transaction =  ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.step_fragment_container, stepVideoFragment).commit();
+            }
+        });
     }
 
     @Override
