@@ -77,7 +77,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         recipeServingsTextView.setText("Servings: " + recipe.getServings());
 
         ImageView imageView = holder.mRecipeImageImageView;
-        imageView.setImageResource(R.drawable.food_placeholder);
+        // imageView.setImageResource(R.drawable.food_placeholder);
     }
 
     @Override
@@ -94,4 +94,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         mRecipeList = recipeList;
         notifyDataSetChanged();
     }
+
+
 }

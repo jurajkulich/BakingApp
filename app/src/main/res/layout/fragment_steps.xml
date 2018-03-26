@@ -2,7 +2,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.example.juraj.bakingapp.StepsFragment">
+             tools:context="com.example.juraj.bakingapp.StepsFragment"
+    android:background="@android:color/white">
 
     <FrameLayout
         android:id="@+id/step_fragment_container"

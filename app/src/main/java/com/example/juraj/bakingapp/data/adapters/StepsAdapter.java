@@ -61,7 +61,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
             public void onClick(View view) {
                 StepVideoFragment stepVideoFragment = StepVideoFragment.newInstance(step);
                 android.support.v4.app.FragmentTransaction transaction =  ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.step_fragment_container, stepVideoFragment).commit();
+                transaction.add(R.id.recipe_detail, stepVideoFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
