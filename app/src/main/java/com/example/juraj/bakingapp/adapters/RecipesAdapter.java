@@ -1,4 +1,4 @@
-package com.example.juraj.bakingapp.data.adapters;
+package com.example.juraj.bakingapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -60,11 +60,11 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         TextView recipeNameTextView = holder.mRecipeNameTextView;
         recipeNameTextView.setText(recipe.getName());
-        recipeNameTextView.setOnClickListener(new View.OnClickListener() {
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Clicked " + recipe.getName(), Toast.LENGTH_SHORT).show();
-                // ((AppCompatActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, StepsFragment.newInstance(recipe)).commit();
                 Intent intent = new Intent(mContext, RecipeDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("RECIPE", recipe);
@@ -77,7 +77,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         recipeServingsTextView.setText("Servings: " + recipe.getServings());
 
         ImageView imageView = holder.mRecipeImageImageView;
-        // imageView.setImageResource(R.drawable.food_placeholder);
+        imageView.setImageResource(R.drawable.food_placeholder);
     }
 
     @Override

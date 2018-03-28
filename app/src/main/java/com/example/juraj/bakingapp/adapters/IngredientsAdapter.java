@@ -1,4 +1,4 @@
-package com.example.juraj.bakingapp.data.adapters;
+package com.example.juraj.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.juraj.bakingapp.R;
 import com.example.juraj.bakingapp.data.model.Ingredient;
-import com.example.juraj.bakingapp.data.model.Step;
 
 import java.util.List;
 
@@ -29,10 +28,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mIngredientNameTextView;
+        public TextView mIngredientUnitTextView;
 
         public ViewHolder(View view) {
             super(view);
             mIngredientNameTextView = view.findViewById(R.id.item_ingredient_name);
+            mIngredientUnitTextView = view.findViewById(R.id.item_ingredient_unit);
         }
     }
 
@@ -50,8 +51,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         Ingredient ingredient = mIngredientList.get(position);
 
-        TextView textView = holder.mIngredientNameTextView;
-        textView.setText(ingredient.getQuantity() + " " + ingredient.getMeasure() + " of " + ingredient.getIngredient());
+        TextView ingredientNameTextView = holder.mIngredientNameTextView;
+        ingredientNameTextView.setText(ingredient.getIngredient());
+
+        TextView ingredientUnitTextView = holder.mIngredientUnitTextView;
+        ingredientUnitTextView.setText(ingredient.getQuantity() + " " + ingredient.getMeasure());
     }
 
     @Override

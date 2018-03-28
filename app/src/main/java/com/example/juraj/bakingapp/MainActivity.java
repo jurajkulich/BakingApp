@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.juraj.bakingapp.data.adapters.RecipesAdapter;
+import com.example.juraj.bakingapp.adapters.RecipesAdapter;
 import com.example.juraj.bakingapp.data.model.Recipe;
 import com.example.juraj.bakingapp.data.remote.ApiUtils;
 import com.example.juraj.bakingapp.data.remote.RecipeService;

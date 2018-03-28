@@ -1,8 +1,8 @@
-package com.example.juraj.bakingapp.data.adapters;
+package com.example.juraj.bakingapp.adapters;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.juraj.bakingapp.R;
+import com.example.juraj.bakingapp.StepVideoActivity;
 import com.example.juraj.bakingapp.StepVideoFragment;
 import com.example.juraj.bakingapp.data.model.Step;
 
@@ -59,11 +60,18 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StepVideoFragment stepVideoFragment = StepVideoFragment.newInstance(step);
+                // StepVideoFragment stepVideoFragment = StepVideoFragment.newInstance(step);
+                Intent intent = new Intent(mContext, StepVideoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("STEP", step);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+                /*
                 android.support.v4.app.FragmentTransaction transaction =  ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.recipe_detail, stepVideoFragment);
+                transaction.replace(R.id.recipe_detail, stepVideoFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+                */
             }
         });
     }

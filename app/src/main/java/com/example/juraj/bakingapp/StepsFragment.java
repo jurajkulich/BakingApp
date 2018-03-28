@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.juraj.bakingapp.data.adapters.StepsAdapter;
+import com.example.juraj.bakingapp.adapters.StepsAdapter;
 import com.example.juraj.bakingapp.data.model.Recipe;
 import com.example.juraj.bakingapp.data.model.Step;
 

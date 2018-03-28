@@ -4,7 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-    android:layout_gravity="center_vertical">
+    android:layout_gravity="center_vertical"
+    android:id="@+id/item_recipe_layout">
 
     <ImageView
         android:id="@+id/tem_recipe_image_placeholder"
@@ -17,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/tem_recipe_image_placeholder"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/item_recipe_servings"
@@ -25,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/tem_recipe_image_placeholder"
         android:layout_below="@id/item_recipe_name"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+        android:textSize="13dp"/>
 
 </RelativeLayout>

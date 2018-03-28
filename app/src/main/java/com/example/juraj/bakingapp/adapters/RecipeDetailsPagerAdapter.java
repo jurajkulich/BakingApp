@@ -1,4 +1,4 @@
-package com.example.juraj.bakingapp.data.adapters;
+package com.example.juraj.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
