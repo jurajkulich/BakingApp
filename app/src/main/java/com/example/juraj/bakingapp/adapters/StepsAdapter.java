@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.juraj.bakingapp.R;
 import com.example.juraj.bakingapp.StepVideoActivity;
 import com.example.juraj.bakingapp.StepVideoFragment;
+import com.example.juraj.bakingapp.StepsFragment;
 import com.example.juraj.bakingapp.data.model.Step;
 
 import java.util.List;
@@ -25,10 +26,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
     private List<Step> mStepList;
     private Context mContext;
+    private StepsFragment.OnStepClickListener mCallback;
 
-    public StepsAdapter(List<Step> stepList, Context context) {
+    public StepsAdapter(List<Step> stepList, Context context, StepsFragment.OnStepClickListener clickListener) {
         mStepList = stepList;
         mContext = context;
+        mCallback = clickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +54,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final Step step = mStepList.get(position);
 
         TextView textView = holder.mStepNameTextView;
@@ -61,11 +64,16 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 // StepVideoFragment stepVideoFragment = StepVideoFragment.newInstance(step);
+                mCallback.onStepClickListener(position);
+                /*
                 Intent intent = new Intent(mContext, StepVideoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("STEP", step);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
+                 */
+
+
                 /*
                 android.support.v4.app.FragmentTransaction transaction =  ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.recipe_detail, stepVideoFragment);

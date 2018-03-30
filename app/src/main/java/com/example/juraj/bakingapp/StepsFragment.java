@@ -1,5 +1,6 @@
 package com.example.juraj.bakingapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,23 @@ public class StepsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private StepsAdapter mStepsAdapter;
 
+
+    OnStepClickListener callback;
+
+    public interface OnStepClickListener {
+        void onStepClickListener(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            callback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 
     public StepsFragment() {
         // Required empty public constructor
@@ -49,7 +67,7 @@ public class StepsFragment extends Fragment {
         Recipe recipe = (Recipe) getArguments().getSerializable("STEPS");
 
         mRecyclerView = rootView.findViewById(R.id.steps_recyclerview);
-        mStepsAdapter = new StepsAdapter(mStepList, getContext());
+        mStepsAdapter = new StepsAdapter(mStepList, getContext(), callback);
         mRecyclerView.setAdapter(mStepsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
