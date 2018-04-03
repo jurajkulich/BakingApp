@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.juraj.bakingapp.adapters.RecipeDetailsPagerAdapter;
 import com.example.juraj.bakingapp.data.model.Recipe;
+import com.example.juraj.bakingapp.widget.WidgetUpdateService;
 
 public class RecipeDetailActivity extends AppCompatActivity implements StepsFragment.OnStepClickListener{
 
@@ -28,6 +29,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
 
         if( getIntent().getExtras() != null)
             recipe  =  (Recipe) getIntent().getExtras().getSerializable("RECIPE");
+
+        WidgetUpdateService.updatingWidget(this, recipe);
 
         if( findViewById(R.id.recipe_detail_two_pane) != null) {
             mTwoPane = true;
