@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     private Context mContext;
     private StepsFragment.OnStepClickListener mCallback;
 
+    private ViewHolder mViewHolder;
+
     public StepsAdapter(List<Step> stepList, Context context, StepsFragment.OnStepClickListener clickListener) {
         mStepList = stepList;
         mContext = context;
@@ -43,6 +47,21 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         }
     }
 
+    public int getViewHolder() {
+        if( mViewHolder == null) {
+            return -1;
+        }
+        return mViewHolder.getAdapterPosition();
+    }
+
+    public void setViewHolder(ViewHolder viewHolder) {
+        if( viewHolder != null) {
+            mViewHolder = viewHolder;
+            mViewHolder.itemView.setSelected(true);
+            Log.e("Viewholder", mViewHolder.getAdapterPosition()+"");
+        }
+    }
+
     @Override
     public StepsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
@@ -54,32 +73,22 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Step step = mStepList.get(position);
 
         TextView textView = holder.mStepNameTextView;
         textView.setText(step.getShortDescription());
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // StepVideoFragment stepVideoFragment = StepVideoFragment.newInstance(step);
                 mCallback.onStepClickListener(position);
-                /*
-                Intent intent = new Intent(mContext, StepVideoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("STEP", step);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
-                 */
 
-
-                /*
-                android.support.v4.app.FragmentTransaction transaction =  ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.recipe_detail, stepVideoFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-                */
+                if( mViewHolder != null) {
+                    mViewHolder.itemView.setSelected(false);
+                }
+                mViewHolder = holder;
+                mViewHolder.itemView.setSelected(true);
             }
         });
     }

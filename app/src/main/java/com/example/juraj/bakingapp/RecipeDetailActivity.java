@@ -2,6 +2,8 @@ package com.example.juraj.bakingapp;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
@@ -21,6 +23,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
 
     private boolean mTwoPane;
 
+    private int selectedPos = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,22 +34,37 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
         if( getIntent().getExtras() != null)
             recipe  =  (Recipe) getIntent().getExtras().getSerializable("RECIPE");
 
+        ViewPager viewPager = findViewById(R.id.recipe_detail_wiewpager);
+        viewPager.setAdapter(new RecipeDetailsPagerAdapter(getSupportFragmentManager(), this, recipe));
+
+        TabLayout tabLayout = findViewById(R.id.recipe_detail_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         WidgetUpdateService.updatingWidget(this, recipe);
 
-        if( findViewById(R.id.recipe_detail_two_pane) != null) {
+        if( savedInstanceState != null)
+            selectedPos = savedInstanceState.getInt("selectedPos");
+
+        if( findViewById(R.id.recipe_detail_two_pane) != null && selectedPos == -1) {
             mTwoPane = true;
-            ViewPager viewPager = findViewById(R.id.recipe_detail_wiewpager);
-            viewPager.setAdapter(new RecipeDetailsPagerAdapter(getSupportFragmentManager(), this, recipe));
-
-            TabLayout tabLayout = findViewById(R.id.recipe_detail_tabs);
-            tabLayout.setupWithViewPager(viewPager);
-        } else {
-            mTwoPane = false;
-
+            Toast.makeText(this, "OnCreate: " + selectedPos, Toast.LENGTH_SHORT).show();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().add(R.id.ingredients_fragment_container, IngredientsFragment.newInstance(recipe)).commit();
-            fragmentManager.beginTransaction().add(R.id.steps_fragment_container, StepsFragment.newInstance(recipe)).commit();
+            fragmentManager.beginTransaction().replace(R.id.step_video_fragment_container, StepVideoFragment.newInstance(recipe.getSteps().get(0))).commit();
+        } else if(findViewById(R.id.recipe_detail_two_pane) == null){
+            mTwoPane = false;
         }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("selectedPos", selectedPos);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
 
     }
 
@@ -61,10 +80,11 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
 
     @Override
     public void onStepClickListener(int position) {
+        selectedPos = position;
         Toast.makeText(this, "Item seleceted: " + position, Toast.LENGTH_SHORT).show();
         if( mTwoPane) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.step_fragment_container, StepVideoFragment.newInstance(recipe.getSteps().get(position))).commit();
+            fragmentManager.beginTransaction().replace(R.id.step_video_fragment_container, StepVideoFragment.newInstance(recipe.getSteps().get(position))).commit();
         } else {
             Intent intent = new Intent(this, StepVideoActivity.class);
             Bundle bundle = new Bundle();

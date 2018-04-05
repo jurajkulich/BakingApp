@@ -26,6 +26,7 @@ public class WidgetUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        Log.d("WidgetUpdate", "Success");
         if( intent != null) {
             Recipe recipe = (Recipe) intent.getExtras().getSerializable("INGREDIENT");
             Log.d("WidgetUpdate", recipe.getName());

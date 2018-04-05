@@ -65,7 +65,10 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_ingredient_item);
         remoteViews.setTextViewText(R.id.widget_ingredient_item_name, String.valueOf(ingredients.get(i).getIngredient()));
         remoteViews.setTextViewText(R.id.widget_ingredient_item_measure, String.valueOf(ingredients.get(i).getQuantity() + " " + ingredients.get(i).getMeasure()));
-        // remoteViews.setTextViewText(R.id.widget_ingredient_item_quantity, String.valueOf(ingredients.get(i).getQuantity()));
+
+        Intent intent = new Intent();
+        remoteViews.setOnClickFillInIntent(R.id.widget_ingredient_item, intent);
+
         return remoteViews;
     }
 

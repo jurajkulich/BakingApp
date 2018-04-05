@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 
 import com.example.juraj.bakingapp.MainActivity;
 import com.example.juraj.bakingapp.R;
+import com.example.juraj.bakingapp.RecipeDetailActivity;
 import com.example.juraj.bakingapp.data.model.Ingredient;
 import com.example.juraj.bakingapp.data.model.Recipe;
 
@@ -31,9 +32,10 @@ public class RecipeWidget extends AppWidgetProvider {
         Intent intent = new Intent(context, ListWidgetService.class);
         remoteViews.setRemoteAdapter(R.id.widget_list_view, intent);
 
-        Intent appIntent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setPendingIntentTemplate(R.id.recipe_detail, pendingIntent);
+        Intent appIntent = new Intent(context, RecipeDetailActivity.class);
+        appIntent.putExtra("RECIPE", sRecipe);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, appIntent, 0);
+        remoteViews.setPendingIntentTemplate(R.id.widget_list_view, pendingIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);

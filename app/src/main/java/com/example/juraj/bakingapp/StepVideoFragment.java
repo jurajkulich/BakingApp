@@ -74,6 +74,7 @@ public class StepVideoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // setRetainInstance(true);
         Bundle bundle = this.getArguments();
         if( bundle != null) {
             mStep = (Step) bundle.getSerializable("STEP");
@@ -120,6 +121,11 @@ public class StepVideoFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
