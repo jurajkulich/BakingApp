@@ -52,6 +52,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
             fragmentManager.beginTransaction().replace(R.id.step_video_fragment_container, StepVideoFragment.newInstance(recipe.getSteps().get(0))).commit();
         } else if(findViewById(R.id.recipe_detail_two_pane) == null){
             mTwoPane = false;
+        } else {
+            mTwoPane = true;
         }
 
     }
@@ -60,12 +62,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("selectedPos", selectedPos);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
     }
 
     @Override
@@ -81,7 +77,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
     @Override
     public void onStepClickListener(int position) {
         selectedPos = position;
-        Toast.makeText(this, "Item seleceted: " + position, Toast.LENGTH_SHORT).show();
         if( mTwoPane) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.step_video_fragment_container, StepVideoFragment.newInstance(recipe.getSteps().get(position))).commit();
