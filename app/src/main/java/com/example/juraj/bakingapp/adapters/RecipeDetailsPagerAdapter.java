@@ -4,8 +4,10 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.juraj.bakingapp.IngredientsFragment;
+import com.example.juraj.bakingapp.R;
 import com.example.juraj.bakingapp.StepsFragment;
 import com.example.juraj.bakingapp.data.model.Recipe;
 
@@ -16,15 +18,24 @@ import com.example.juraj.bakingapp.data.model.Recipe;
 public class RecipeDetailsPagerAdapter extends FragmentPagerAdapter {
 
     final int PAGES = 2;
-    private String tabs[] = { "Ingredients", "Steps"};
 
     private Context mContext;
     private Recipe mRecipe;
+    private boolean mIsTwoPane;
 
-    public RecipeDetailsPagerAdapter(FragmentManager fragmentManager, Context context, Recipe recipe) {
+    private String[] tabs;
+
+    public RecipeDetailsPagerAdapter(Context context, FragmentManager fragmentManager, Recipe recipe, boolean isTwoPane) {
         super(fragmentManager);
         mContext = context;
         mRecipe = recipe;
+        mIsTwoPane = isTwoPane;
+
+        tabs = new String[]{ mContext.getResources().getString(R.string.tab_ingredients),
+                mContext.getResources().getString(R.string.tab_steps)};
+
+        Log.e("PagerAdapter", mIsTwoPane + "");
+
     }
 
     @Override
@@ -34,10 +45,10 @@ public class RecipeDetailsPagerAdapter extends FragmentPagerAdapter {
                 return IngredientsFragment.newInstance(mRecipe);
             }
             case 1: {
-                return StepsFragment.newInstance(mRecipe);
+                return StepsFragment.newInstance(mRecipe, mIsTwoPane);
             }
             default:
-                return StepsFragment.newInstance(mRecipe);
+                return StepsFragment.newInstance(mRecipe, mIsTwoPane);
         }
     }
 

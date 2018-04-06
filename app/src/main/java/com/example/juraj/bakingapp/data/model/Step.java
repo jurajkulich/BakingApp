@@ -4,9 +4,6 @@ package com.example.juraj.bakingapp.data.model;
  * Created by juraj on 3/19/18.
  */
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

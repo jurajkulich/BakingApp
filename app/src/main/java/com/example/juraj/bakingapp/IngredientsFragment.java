@@ -19,6 +19,8 @@ import com.example.juraj.bakingapp.data.model.Recipe;
  */
 public class IngredientsFragment extends Fragment {
 
+    private static final String ingredientsBundle = "INGREDIENTS";
+
     private RecyclerView mRecyclerView;
     private IngredientsAdapter mIngredientsAdapter;
 
@@ -28,7 +30,7 @@ public class IngredientsFragment extends Fragment {
 
     public static IngredientsFragment newInstance(Recipe recipe) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("INGREDIENTS", recipe);
+        bundle.putSerializable(ingredientsBundle, recipe);
         IngredientsFragment fragment = new IngredientsFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -41,7 +43,7 @@ public class IngredientsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_ingredients, container, false);
 
-        Recipe recipe = (Recipe) getArguments().getSerializable("INGREDIENTS");
+        Recipe recipe = (Recipe) getArguments().getSerializable(ingredientsBundle);
 
         mRecyclerView = rootView.findViewById(R.id.ingredient_recyclerview);
         mIngredientsAdapter = new IngredientsAdapter(recipe.getIngredients(), getContext());
@@ -50,7 +52,6 @@ public class IngredientsFragment extends Fragment {
 
         if( recipe != null) {
             mIngredientsAdapter.updateAdapter(recipe.getIngredients());
-            Log.e("StepsFragment", "Recipe is great");
         } else {
             Log.e("StepsFragment", "Recipe is null");
         }

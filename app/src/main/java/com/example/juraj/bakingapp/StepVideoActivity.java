@@ -54,7 +54,7 @@ public class StepVideoActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        mStep = (Step) getIntent().getExtras().getSerializable("STEP");
+        mStep = (Step) getIntent().getExtras().getSerializable(RecipeDetailActivity.stepBundle);
 
         if( mStep.getDescription() != null) {
             mStepDescription.setText(mStep.getDescription());

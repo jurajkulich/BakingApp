@@ -1,4 +1,4 @@
-package com.example.juraj.bakingapp;
+package com.example.juraj.bakingapp.idlingresource;
 
 import android.support.annotation.Nullable;
 import android.support.test.espresso.IdlingResource;

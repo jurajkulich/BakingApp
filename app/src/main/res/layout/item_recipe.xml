@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/tem_recipe_image_placeholder"
         android:layout_marginLeft="5dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -29,6 +29,6 @@
         android:layout_toRightOf="@id/tem_recipe_image_placeholder"
         android:layout_below="@id/item_recipe_name"
         android:layout_marginLeft="5dp"
-        android:textSize="13dp"/>
+        android:textSize="13sp"/>
 
 </RelativeLayout>

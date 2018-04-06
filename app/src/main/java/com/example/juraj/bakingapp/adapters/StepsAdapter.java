@@ -1,20 +1,14 @@
 package com.example.juraj.bakingapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.juraj.bakingapp.R;
-import com.example.juraj.bakingapp.StepVideoActivity;
-import com.example.juraj.bakingapp.StepVideoFragment;
 import com.example.juraj.bakingapp.StepsFragment;
 import com.example.juraj.bakingapp.data.model.Step;
 
@@ -31,11 +25,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     private StepsFragment.OnStepClickListener mCallback;
 
     private ViewHolder mViewHolder;
+    private boolean mIsTwoPane;
 
-    public StepsAdapter(List<Step> stepList, Context context, StepsFragment.OnStepClickListener clickListener) {
+    public StepsAdapter(List<Step> stepList, Context context, StepsFragment.OnStepClickListener clickListener, boolean isTwoPane) {
         mStepList = stepList;
         mContext = context;
         mCallback = clickListener;
+        mIsTwoPane = isTwoPane;
+        Log.e("StepsAdapter", isTwoPane + "");
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,10 +52,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     }
 
     public void setViewHolder(ViewHolder viewHolder) {
-        if( viewHolder != null) {
-            mViewHolder = viewHolder;
-            mViewHolder.itemView.setSelected(true);
-            Log.e("Viewholder", mViewHolder.getAdapterPosition()+"");
+        if( mIsTwoPane) {
+            if (viewHolder != null) {
+                mViewHolder = viewHolder;
+                mViewHolder.itemView.setSelected(true);
+                Log.e("Viewholder", mViewHolder.getAdapterPosition() + "");
+            }
         }
     }
 
@@ -83,12 +82,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 mCallback.onStepClickListener(position);
-
-                if( mViewHolder != null) {
-                    mViewHolder.itemView.setSelected(false);
+                if( mIsTwoPane) {
+                    if (mViewHolder != null) {
+                        mViewHolder.itemView.setSelected(false);
+                    }
+                    mViewHolder = holder;
+                    mViewHolder.itemView.setSelected(true);
                 }
-                mViewHolder = holder;
-                mViewHolder.itemView.setSelected(true);
             }
         });
     }

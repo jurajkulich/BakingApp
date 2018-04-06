@@ -15,7 +15,9 @@ import com.example.juraj.bakingapp.adapters.RecipesAdapter;
 import com.example.juraj.bakingapp.data.model.Recipe;
 import com.example.juraj.bakingapp.data.remote.ApiUtils;
 import com.example.juraj.bakingapp.data.remote.RecipeService;
+import com.example.juraj.bakingapp.idlingresource.RecipesIdlingResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecipesAdapter mRecipesAdapter;
-    private List<Recipe> mRecipeList;
 
     private RecipeService mRecipeService;
 
 
-    private @Nullable RecipesIdlingResource mIdlingResource;
+    private @Nullable
+    RecipesIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recipes_recyclerview);
         RecyclerView.ItemDecoration itemDecoration =  new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
-        mRecipesAdapter = new RecipesAdapter(mRecipeList, this);
+        mRecipesAdapter = new RecipesAdapter(new ArrayList<Recipe>(), this);
         mRecyclerView.setAdapter(mRecipesAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

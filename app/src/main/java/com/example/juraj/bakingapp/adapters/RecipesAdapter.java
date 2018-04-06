@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.juraj.bakingapp.R;
 import com.example.juraj.bakingapp.RecipeDetailActivity;
@@ -22,6 +21,8 @@ import java.util.List;
  */
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
+
+    public static final String recipeBundle = "RECIPE";
 
     private List<Recipe> mRecipeList;
     private Context mContext;
@@ -67,14 +68,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, RecipeDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("RECIPE", recipe);
+                bundle.putSerializable(recipeBundle, recipe);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         });
 
         TextView recipeServingsTextView = holder.mRecipeServingsTextview;
-        recipeServingsTextView.setText("Servings: " + recipe.getServings());
+        recipeServingsTextView.setText(mContext.getResources().getString(R.string.servings) + recipe.getServings());
 
         ImageView imageView = holder.mRecipeImageImageView;
         imageView.setImageResource(R.drawable.food_placeholder);
@@ -94,6 +95,4 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         mRecipeList = recipeList;
         notifyDataSetChanged();
     }
-
-
 }

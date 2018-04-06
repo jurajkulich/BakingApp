@@ -9,7 +9,6 @@ import com.example.juraj.bakingapp.R;
 import com.example.juraj.bakingapp.data.model.Ingredient;
 import com.example.juraj.bakingapp.data.model.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

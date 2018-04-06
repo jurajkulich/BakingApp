@@ -8,13 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.example.juraj.bakingapp.MainActivity;
 import com.example.juraj.bakingapp.R;
 import com.example.juraj.bakingapp.RecipeDetailActivity;
-import com.example.juraj.bakingapp.data.model.Ingredient;
 import com.example.juraj.bakingapp.data.model.Recipe;
-
-import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
