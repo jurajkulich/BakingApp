@@ -1,5 +1,9 @@
 package com.example.juraj.bakingapp;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private RecipeService mRecipeService;
 
 
+    private @Nullable RecipesIdlingResource mIdlingResource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
         mRecipeService = ApiUtils.getRecipeService();
 
-
+        getIdlingResource();
+        if( mIdlingResource != null) {
+            mIdlingResource.setIdleState(false);
+        }
         loadResponse();
     }
 
     public void loadResponse() {
         mRecipeService.getResponse().enqueue(new Callback<List<Recipe>>() {
+
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if( response.isSuccessful() ) {
@@ -54,12 +64,27 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Log.e("MainActivity", "Response unsuccesful: " + response.code());
                 }
+                if( mIdlingResource != null) {
+                    mIdlingResource.setIdleState(true);
+                }
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
                 Log.e("MainActivity", "Response failure: " + t.toString());
+                if( mIdlingResource != null) {
+                    mIdlingResource.setIdleState(true);
+                }
             }
         });
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if( mIdlingResource == null) {
+            mIdlingResource = new RecipesIdlingResource();
+        }
+        return mIdlingResource;
     }
 }

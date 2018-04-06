@@ -42,8 +42,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
 
         WidgetUpdateService.updatingWidget(this, recipe);
 
-        if( savedInstanceState != null)
+        if( savedInstanceState != null) {
             selectedPos = savedInstanceState.getInt("selectedPos");
+        }
 
         if( findViewById(R.id.recipe_detail_two_pane) != null && selectedPos == -1) {
             mTwoPane = true;
