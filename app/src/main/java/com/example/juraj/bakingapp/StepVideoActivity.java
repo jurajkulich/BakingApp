@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +31,12 @@ import butterknife.ButterKnife;
 
 public class StepVideoActivity extends AppCompatActivity {
 
+    private static final String positionBundle = "position_bundle";
+    private static final String stateBundle = "state_bundle";
+
+    private long mPlayerPosition = 0;
+    private boolean mPlayerState = false;
+
     private Step mStep;
 
     @BindView(R.id.exo_player_activity)
@@ -51,6 +58,13 @@ public class StepVideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_video);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        if(savedInstanceState != null) {
+            mPlayerPosition = savedInstanceState.getLong(positionBundle);
+            mPlayerState = savedInstanceState.getBoolean(stateBundle);
+            Log.e("OnCreate", mPlayerPosition+"");
+        }
 
         ButterKnife.bind(this);
 
@@ -78,18 +92,29 @@ public class StepVideoActivity extends AppCompatActivity {
                     .createMediaSource(Uri.parse(url), handler, null);
 
             mPlayerView.setPlayer(mSimpleExoPlayer);
-            mSimpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
+            mSimpleExoPlayer.setPlayWhenReady(mPlayerState);
             mSimpleExoPlayer.prepare(mediaSource);
+            if(mPlayerPosition != 0) {
+                mSimpleExoPlayer.seekTo(mPlayerPosition);
+                Log.e("StepVideoActivity", mPlayerPosition+"");
+            }
 
-            mSimpleExoPlayer.setPlayWhenReady(true);
         } else {
             mPlayerView.setVisibility(View.GONE);
         }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putLong(positionBundle, mSimpleExoPlayer.getCurrentPosition());
+        outState.putBoolean(stateBundle, mSimpleExoPlayer.getPlayWhenReady());
+        Log.e("OnSave", mSimpleExoPlayer.getCurrentPosition()+"");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         if( mSimpleExoPlayer != null) {
             mSimpleExoPlayer.release();
         }

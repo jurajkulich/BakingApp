@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.7.1'
 
     compile "com.android.support:design:26.1.0"
-
+    implementation 'com.squareup.picasso:picasso:2.71828'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
@@ -44,6 +44,4 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:1.0.1'
     compile 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2')
-
-
 }

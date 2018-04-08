@@ -37,6 +37,12 @@ import butterknife.ButterKnife;
  */
 public class StepVideoFragment extends Fragment {
 
+    private static final String positionBundle = "position_bundle";
+    private static final String stateBundle = "state_bundle";
+
+    private long mPlayerPosition = 0;
+    private boolean mPlayerState = false;
+
     private Step mStep;
 
     @BindView(R.id.exo_player)
@@ -68,10 +74,12 @@ public class StepVideoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setRetainInstance(true);
+
         Bundle bundle = this.getArguments();
         if( bundle != null) {
             mStep = (Step) bundle.getSerializable("STEP");
+            mPlayerPosition = bundle.getLong(positionBundle);
+            mPlayerState = savedInstanceState.getBoolean(stateBundle);
         } else {
             mStep = null;
             Log.e("StepVideo", "mStep is null");
@@ -106,10 +114,12 @@ public class StepVideoFragment extends Fragment {
                     .createMediaSource(Uri.parse(url), handler, null);
 
             mPlayerView.setPlayer(mSimpleExoPlayer);
-            mSimpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
+            mSimpleExoPlayer.setPlayWhenReady(mPlayerState);
             mSimpleExoPlayer.prepare(mediaSource);
-
-            // mSimpleExoPlayer.setPlayWhenReady(true);
+            if(mPlayerPosition != 0) {
+                mSimpleExoPlayer.seekTo(mPlayerPosition);
+                Log.e("StepVideoActivity", mPlayerPosition+"");
+            }
         } else {
             mPlayerView.setVisibility(View.GONE);
         }
@@ -119,12 +129,14 @@ public class StepVideoFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putLong(positionBundle, mSimpleExoPlayer.getCurrentPosition());
+        outState.putBoolean(stateBundle, mSimpleExoPlayer.getPlayWhenReady());
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         if( mSimpleExoPlayer != null) {
             mSimpleExoPlayer.release();
         }
