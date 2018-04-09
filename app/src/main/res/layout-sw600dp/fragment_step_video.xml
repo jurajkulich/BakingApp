@@ -11,6 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/step_video_thumbnail_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/exo_player"
             android:layout_width="match_parent"
