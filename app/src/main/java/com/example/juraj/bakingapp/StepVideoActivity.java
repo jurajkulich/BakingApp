@@ -67,7 +67,6 @@ public class StepVideoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         if(savedInstanceState != null) {
             mPlayerPosition = savedInstanceState.getLong(positionBundle);
             mPlayerState = savedInstanceState.getBoolean(stateBundle);
@@ -135,9 +134,11 @@ public class StepVideoActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putLong(positionBundle, mSimpleExoPlayer.getCurrentPosition());
-        outState.putBoolean(stateBundle, mSimpleExoPlayer.getPlayWhenReady());
-        Log.e("OnSave", mSimpleExoPlayer.getCurrentPosition()+"");
+        if( mSimpleExoPlayer != null) {
+            outState.putLong(positionBundle, mSimpleExoPlayer.getCurrentPosition());
+            outState.putBoolean(stateBundle, mSimpleExoPlayer.getPlayWhenReady());
+            Log.e("OnSave", mSimpleExoPlayer.getCurrentPosition()+"");
+        }
         super.onSaveInstanceState(outState);
     }
 

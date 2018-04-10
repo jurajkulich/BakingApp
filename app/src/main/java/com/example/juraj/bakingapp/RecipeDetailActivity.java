@@ -43,11 +43,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsFrag
             mTwoPane = true;
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.step_video_fragment_container, StepVideoFragment.newInstance(recipe.getSteps().get(0))).commit();
-        } else if(findViewById(R.id.recipe_detail_two_pane) == null){
-            mTwoPane = false;
-        } else {
-            mTwoPane = true;
-        }
+        } else mTwoPane = findViewById(R.id.recipe_detail_two_pane) != null;
 
         ViewPager viewPager = findViewById(R.id.recipe_detail_wiewpager);
         viewPager.setAdapter(new RecipeDetailsPagerAdapter(this, getSupportFragmentManager(), recipe, mTwoPane));

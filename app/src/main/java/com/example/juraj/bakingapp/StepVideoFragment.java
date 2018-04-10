@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.juraj.bakingapp.data.model.Step;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -47,7 +46,7 @@ public class StepVideoFragment extends Fragment {
     private static final String stateBundle = "state_bundle";
 
     private long mPlayerPosition = 0;
-    private boolean mPlayerState = true;
+    private boolean mPlayerState = false;
 
     private Step mStep;
 
@@ -83,12 +82,9 @@ public class StepVideoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle bundle = this.getArguments();
         if( bundle != null) {
             mStep = (Step) bundle.getSerializable("STEP");
-            mPlayerPosition = bundle.getLong(positionBundle);
-            mPlayerState = savedInstanceState.getBoolean(stateBundle);
         } else {
             mStep = null;
             Log.e("StepVideo", "mStep is null");
@@ -100,6 +96,11 @@ public class StepVideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_video, container, false);
         ButterKnife.bind(this, rootView);
+
+        if( savedInstanceState != null) {
+            mPlayerPosition = savedInstanceState.getLong(positionBundle);
+            mPlayerState = savedInstanceState.getBoolean(stateBundle);
+        }
 
         if( mStep.getDescription() != null) {
             mStepDescription.setText(mStep.getDescription());
@@ -125,7 +126,6 @@ public class StepVideoFragment extends Fragment {
             mSimpleExoPlayer.prepare(mediaSource);
             if(mPlayerPosition != 0) {
                 mSimpleExoPlayer.seekTo(mPlayerPosition);
-                Log.e("StepVideoActivity", mPlayerPosition+"");
             }
         } else if(mStep.getThumbnailURL() != "") {
             // Check if thumbnail is an image
@@ -154,14 +154,15 @@ public class StepVideoFragment extends Fragment {
             mThumbnailImageView.setVisibility(View.GONE);
             mPlayerView.setVisibility(View.GONE);
         }
-
         return rootView;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putLong(positionBundle, mSimpleExoPlayer.getCurrentPosition());
-        outState.putBoolean(stateBundle, mSimpleExoPlayer.getPlayWhenReady());
+        if( mSimpleExoPlayer != null) {
+            outState.putLong(positionBundle, mSimpleExoPlayer.getCurrentPosition());
+            outState.putBoolean(stateBundle, mSimpleExoPlayer.getPlayWhenReady());
+        }
         super.onSaveInstanceState(outState);
     }
 
